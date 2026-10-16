@@ -123,7 +123,7 @@ The last two are explicit requests for the action tools; an assistant should not
 
 ## Links
 
-- X: [https://](https://x.com/TukeyAI)
+- X: https://x.com/TukeyAI
 - Youtube: https://www.youtube.com/@TukeyAI
 - LinkedIn: https://www.linkedin.com/company/tukey-ai/
 - CrunchBase: https://www.crunchbase.com/organization/tukey-ai
