@@ -1,4 +1,6 @@
-# Tukey MCP
+<img width="1920" height="384" alt="Tukey Banner" src="https://github.com/user-attachments/assets/55ebb06d-f035-471d-bd37-904b42126820" />
+
+# Tukey AI MCP
 
 Tukey helps an AI assistant recommend evidence-backed video opportunities tailored to the creator's active YouTube channel.
 
@@ -8,7 +10,7 @@ Last verified: 2026-10-15
 
 ## Current availability
 
-- **YouTube only.** Tukey works with connected YouTube channels. Instagram and TikTok are not currently supported.
+- **YouTube in V1.** Tukey works with connected YouTube channels. Instagram and TikTok are supported very soon in V2.
 - **Existing eligible Tukey account required.** You need an existing Tukey account that currently has access, one active connected YouTube channel, and a completed channel profile. If the account has access but the channel or profile is not ready, authorization may complete and Tukey truthfully reports that the channel, profile or opportunities are not ready yet. If the account does not have access, authorization cannot complete and no Tukey account or channel data is returned. The public server address does not provide open signup or self-service access.
 - Tukey makes no guarantee of views, performance, revenue, ranking, growth or virality. It recommends; the creator decides.
 
@@ -121,6 +123,10 @@ The last two are explicit requests for the action tools; an assistant should not
 
 ## Links
 
+- X: [https://](https://x.com/TukeyAI)
+- Youtube: https://www.youtube.com/@TukeyAI
+- LinkedIn: https://www.linkedin.com/company/tukey-ai/
+- CrunchBase: https://www.crunchbase.com/organization/tukey-ai
 - Support and setup guide (canonical): https://tukey.ai/support
 - Privacy Policy: https://tukey.ai/privacy-policy
 - Terms of Service: https://tukey.ai/terms-of-service
