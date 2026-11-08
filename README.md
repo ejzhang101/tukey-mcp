@@ -26,7 +26,7 @@ Last verified against the live product: **2026-11-08**.
 **Do not use Tukey for:**
 
 - someone else's channel or account, or a general question about YouTube or Instagram;
-- view counts, per-video or per-Reel performance, Instagram reach or audience analytics (Tukey has none of these; for a YouTube channel use YouTube Studio);
+- view counts, per-video or per-Reel performance, Instagram reach or audience analytics (not available through Tukey's MCP tools; for a YouTube channel use YouTube Studio);
 - publishing, editing or deleting anything on YouTube or Instagram (Tukey never does);
 - a guarantee of views, growth or any other outcome (Tukey makes none);
 - TikTok or any platform other than YouTube and Instagram.
@@ -113,7 +113,7 @@ The last two are explicit requests for the action tools. An assistant should nev
 > **Tukey's current ideas for your channel (illustrative)**
 >
 > **Timely**
-> 1. *"The one setting that made my footage look expensive"*: a before-and-after on exposure and color choices your audience has been asking about in the comments. Why it fits: your most-watched format is the practical walkthrough, and this topic matches your gear-on-a-budget pillar. Why now: two communities your viewers frequent discussed the same frustration this week. Evidence: 3 dated sources.
+> 1. *"The one setting that made my footage look expensive"*: a before-and-after on exposure and color choices your audience has been asking about in the comments. Why it fits: your most frequent format is the practical walkthrough, and this topic matches your gear-on-a-budget pillar. Why now: two communities your viewers frequent discussed the same frustration this week. Evidence: 3 dated sources.
 >
 > **Evergreen**
 > 2. *"What I would buy first if I started over"*: a structured recommendation built around your recurring beginner series. Why it fits: your voice is direct and practical, and this is a question your audience keeps asking. Evidence: none. This idea rests on account fit alone.
