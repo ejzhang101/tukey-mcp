@@ -1,137 +1,215 @@
-<img width="1920" height="384" alt="Tukey Banner" src="https://github.com/user-attachments/assets/55ebb06d-f035-471d-bd37-904b42126820" />
+<img width="1920" height="384" alt="Tukey banner: the Tukey logo mark beside the tagline Make every video count. Discover earlier. Make what matters." src="https://github.com/user-attachments/assets/55ebb06d-f035-471d-bd37-904b42126820" />
 
-# Tukey AI MCP
+# Tukey MCP: decide what video or Reel to make next
 
-Tukey helps an AI assistant recommend evidence-backed video opportunities tailored to the creator's active YouTube channel.
+Tukey helps a creator decide what video or Reel to make next for their **own** connected YouTube channel or confirmed public Instagram account. It studies that one account, watches the communities its audience lives in, and proposes specific ideas, each with a working title, premise, angle, hook, why it fits, why now, and the dated evidence behind it where that evidence exists. Tukey surfaces. The creator decides.
 
-This repository is a public technical quickstart for connecting Tukey to an AI assistant over the Model Context Protocol (MCP). The canonical, maintained setup and support guide is **https://tukey.ai/support**. Where this document and that page differ, the support page is authoritative.
+This repository is the public quickstart for connecting Tukey to an AI assistant over the Model Context Protocol (MCP). The maintained setup and support guide is **https://tukey.ai/support**; where this page and that guide differ, the guide is authoritative.
 
-Last verified: 2026-10-15
+Last verified against the live product: **2026-11-08**.
 
-## Current availability
+- Public listing: [Claude Connectors Directory](https://claude.ai/directory/tukey) (Community connector)
+- Official MCP Registry entry: [`ai.tukey/tukey`](https://registry.modelcontextprotocol.io/v0.1/servers/ai.tukey%2Ftukey/versions/latest) (latest version 0.1.1)
+- Endpoint: `https://www.tukey.ai/mcp`
 
-- **YouTube in V1.** Tukey works with connected YouTube channels. Instagram and TikTok are supported very soon in V2.
-- **Existing eligible Tukey account required.** You need an existing Tukey account that currently has access, one active connected YouTube channel, and a completed channel profile. If the account has access but the channel or profile is not ready, authorization may complete and Tukey truthfully reports that the channel, profile or opportunities are not ready yet. If the account does not have access, authorization cannot complete and no Tukey account or channel data is returned. The public server address does not provide open signup or self-service access.
-- Tukey makes no guarantee of views, performance, revenue, ranking, growth or virality. It recommends; the creator decides.
+## Who it helps, and when
 
-## Canonical endpoint
+**Who it helps.** Creators who publish on YouTube or Instagram and want their AI assistant to work from their own account's evidence instead of generic trend lists; and agent builders who want a remote MCP server whose tools are scoped to one authenticated creator account.
+
+**Use Tukey when you want to:**
+
+- see what Tukey currently suggests you make next, and why it fits your account right now;
+- check the dated sources behind an idea before you commit to it;
+- have your assistant describe your account the way Tukey profiled it (topics, formats, voice, audience) before planning, titling or pitching a video or Reel;
+- save, pass on, dismiss or start one of those ideas from inside the conversation, when you explicitly ask.
+
+**Do not use Tukey for:**
+
+- someone else's channel or account, or a general question about YouTube or Instagram;
+- view counts, per-video or per-Reel performance, Instagram reach or audience analytics (Tukey has none of these; for a YouTube channel use YouTube Studio);
+- publishing, editing or deleting anything on YouTube or Instagram (Tukey never does);
+- a guarantee of views, growth or any other outcome (Tukey makes none);
+- TikTok or any platform other than YouTube and Instagram.
+
+## How it works
+
+```mermaid
+flowchart TD
+    A["1. Create a Tukey account<br/>tukey.ai/sign-up · Google or email · no card"] --> B["2. Connect one creator account<br/>YouTube through Google, or a public Instagram account you confirm after Tukey reads it"]
+    B --> C["3. Tukey profiles the account and proposes ideas<br/>working title · premise · angle · hook · why it fits · why now · evidence"]
+    C --> D["4. Add Tukey to Claude or ChatGPT<br/>sign in to Tukey and approve the consent page"]
+    D --> E["5. Ask your assistant<br/>what should I make next?"]
+    E --> F["Examine one idea<br/>fit · why now · dated evidence, if any"]
+    F --> G{"Your decision"}
+    G -->|"keep · weak · reject"| H["rate_video_opportunity<br/>records the rating in Tukey"]
+    G -->|"make it"| I["start_video_opportunity<br/>opens a Tukey video workspace and saves the idea"]
+    G -->|"not now"| E
+```
+
+<details>
+<summary>Text version of the diagram</summary>
+
+1. Create a Tukey account at tukey.ai/sign-up with Google or email and password. No card.
+2. Connect one creator account: a YouTube channel through Google, or a public Instagram account you confirm after Tukey reads it.
+3. Tukey profiles the account and proposes ideas, each with a working title, premise, angle, hook, why it fits, why now and its evidence.
+4. Add Tukey to Claude or ChatGPT; sign in to Tukey and approve the consent page.
+5. Ask your assistant what you should make next.
+6. Examine one idea: its fit, why now, and the dated evidence behind it, if it has any.
+7. Decide. A rating (keep, weak or reject) goes through `rate_video_opportunity`; choosing to make it goes through `start_video_opportunity`, which opens a Tukey video workspace and saves the idea; or ask for more ideas.
+
+</details>
+
+Steps 1 to 3 happen in Tukey. Steps 4 to 7 can happen in your assistant. The two action tools run only when you explicitly ask.
+
+## What is available today
+
+- **YouTube and Instagram.** TikTok and other platforms are not available.
+- **YouTube** connects through Google, which confirms that you manage the channel.
+- **Instagram needs no Instagram login.** You submit a public Instagram account. Tukey reads at most 12 public Reels chosen from at most 48 observed, once, and you confirm the result. Neither public readability nor your confirmation verifies control or ownership of the account. Tukey receives no Instagram access token and reads no private Instagram data or direct messages.
+- **Open registration.** Sign up at https://tukey.ai/sign-up with Google or email and password. No invitation and no payment card are needed to begin. New accounts receive three days of free access that never enrolls or charges you automatically, and Welcome Credits. See https://tukey.ai/pricing for current plans, included use and Credits. If a Tukey account does not currently have access, authorization cannot complete and no account or channel data is returned.
+- **One connected creator account** per Tukey account.
+
+## Connect Tukey to Claude
+
+Tukey has a public listing in the Claude Connectors Directory: **https://claude.ai/directory/tukey**. It is a Community connector: Anthropic runs automated reviews on Community connectors and does not verify them.
+
+- **From the Directory.** Open the listing, sign in to Claude, and add Tukey. Claude sends you to Tukey to sign in and approve access.
+- **As a custom connector (Pro and Max).** Customize > Connectors > + Add > Add custom connector. Enter `https://www.tukey.ai/mcp` and continue with the OAuth settings Claude detects.
+- **Team and Enterprise.** An Owner, or another role your organization authorizes, first adds the connector under Organization settings > Connectors with the same server address. Members then connect it under Customize > Connectors.
+
+## Connect Tukey to ChatGPT (custom app)
+
+Tukey has no verified listing in ChatGPT's app directory. You add it as a custom app where your plan and workspace settings allow custom MCP apps. Menu labels may vary while these features are in beta, and full MCP support, including write actions such as Tukey's two action tools, is subject to ChatGPT plan and workspace controls.
+
+- **Business, Enterprise and Edu.** A workspace Admin or Owner, or a developer they authorize: enable Developer mode; open Settings (or Workspace settings) > Apps > Create; enter `https://www.tukey.ai/mcp` as the server URL; select OAuth and complete the authorization on Tukey's consent page; let ChatGPT scan the tools; create and enable the app.
+- **Pro.** OpenAI currently limits custom MCP use on Pro to eligible read/fetch capabilities in Developer mode. Tukey has not separately canary-tested the Pro surface, so do not rely on the two action tools being available there.
+- **Other plans.** If the plan does not offer custom MCP apps, Tukey cannot be connected to ChatGPT yet.
+
+## A creator's workflow, start to finish
+
+1. **Connect in Tukey first.** Sign up, connect your YouTube channel through Google or confirm a public Instagram account, and wait for the profile and the first ideas. Profiling and the first batch take time after an account is connected.
+2. **Add Tukey to your assistant** from the Directory, as a custom connector, or as a ChatGPT custom app. On Tukey's consent page, check that the address shown (for example `claude.ai` or `chatgpt.com`) matches the assistant you are using, read what you are granting, and choose Allow. Nothing is connected until you do.
+3. **Ask what to make next.** Your assistant lists Tukey's current ideas for your account, grouped as timely, evergreen or early-watch. Early-watch items are signals to follow, not recommendations.
+4. **Examine one idea.** Ask why it fits your account and why now. Ask for the evidence: Tukey returns the dated public sources (community, title, link) behind that idea. Some ideas rest on account fit alone and carry no citations; a good assistant says so instead of inventing sources.
+5. **Decide, explicitly.** Say "mark it as weak", "keep it", "reject it" or "start it in Tukey". Only then does the assistant call an action tool. A rating replaces any earlier rating of that idea; a reject can keep that idea and its topic from being suggested for a while. Starting an idea opens its Tukey video workspace, saves the idea (replacing any earlier rating) and returns a link; starting it again returns the same workspace.
+6. **Keep going in Tukey.** The workspace, your ratings and your connections live in your Tukey account, with or without the assistant.
+
+## Example prompts
+
+- "What should I make next on my channel?"
+- "List my current Tukey ideas and tell me which are timely."
+- "Why does the first idea fit my account, and why now?"
+- "Show me the evidence behind the second idea."
+- "Give me a title and hook for the first idea." (an assistant grounds this in one of your current ideas rather than inventing a topic)
+- "Mark the third idea as weak in Tukey."
+- "Start the first idea in Tukey."
+
+The last two are explicit requests for the action tools. An assistant should never rate or start an idea you did not ask it to.
+
+### Illustrative output
+
+> **Illustrative only.** The channel, ideas and sources below are invented to show the shape of a response. They are not real Tukey output, not a real creator, and not a measurement of anything.
+
+> **Tukey's current ideas for your channel (illustrative)**
+>
+> **Timely**
+> 1. *"The one setting that made my footage look expensive"*: a before-and-after on exposure and color choices your audience has been asking about in the comments. Why it fits: your most-watched format is the practical walkthrough, and this topic matches your gear-on-a-budget pillar. Why now: two communities your viewers frequent discussed the same frustration this week. Evidence: 3 dated sources.
+>
+> **Evergreen**
+> 2. *"What I would buy first if I started over"*: a structured recommendation built around your recurring beginner series. Why it fits: your voice is direct and practical, and this is a question your audience keeps asking. Evidence: none. This idea rests on account fit alone.
+>
+> **Early-watch**
+> 3. *An emerging format in your niche*: a signal to follow, not a recommendation yet. Evidence: 1 dated source.
+>
+> Say "show me the evidence behind idea 1" to see its sources, or "mark idea 2 as weak" or "start idea 1 in Tukey" if you have decided.
+
+## Tools: six registered, five for the creator workflow
+
+Tukey's server registers six tools. Five are creator-account tools: they work only on the one connected creator account and are the tools an assistant works with. The sixth, `get_profile`, is a separate identity tool marked app-only.
+
+All six carry MCP tool annotations and can be read before connecting in the [server card](https://www.tukey.ai/.well-known/mcp/server-card.json).
+
+### App-only identity tool
+
+| Tool | What it does |
+| --- | --- |
+| `get_profile` | Returns which Tukey account approved access, including its name and email address. It returns no creator-account data and no analytics. Read only. It is registered app-only (`_meta.ui.visibility: ["app"]`): a host that implements MCP Apps visibility does not offer it to the model, which then works with the five creator-account tools; a client that does not honor that metadata may expose it. Tukey does not promise that any assistant can tell you which Tukey login is connected. |
+
+### Read tools (never change your account)
+
+| Tool | What it returns |
+| --- | --- |
+| `get_channel_profile` | Tukey's profile of the connected account: what it is about, its content pillars, formats, recurring series, voice, hooks and intended audience. For a YouTube channel it includes subscriber and video counts; for an Instagram account, its handle, profile address, display name, and public follower and post counts. |
+| `list_video_opportunities` | The current video or Reel ideas for the account, each with a working title, premise, angle, hook, why it fits, why now and how much evidence backs it, grouped as timely, evergreen or early-watch. Some ideas carry no citations. |
+| `get_opportunity_evidence` | The dated public sources behind one idea (community, title, link). Takes an idea id from `list_video_opportunities`. |
+
+### Action tools (change your Tukey account; used only on your explicit request)
+
+| Tool | What it does |
+| --- | --- |
+| `rate_video_opportunity` | Records a `keep`, `weak` or `reject` rating on one idea, exactly as if you had rated it in Tukey. The latest rating wins; a reject can keep that idea and its topic from being suggested for a while. |
+| `start_video_opportunity` | Starts one idea as a Tukey video workspace and saves it, replacing any earlier rating of that idea. Starting the same idea again returns the same workspace and never creates a second one. |
+
+Both action tools change only your private Tukey account. Creator-account content reads may use included content reads or Tukey Credits; see https://tukey.ai/pricing.
+
+## Evidence and limits
+
+- **Some ideas have no external citations.** Each idea states how much evidence backs it; an idea can rest on account fit alone. Ask for the evidence before you rely on an idea.
+- **No analytics.** Tukey does not provide view counts, per-video or per-Reel performance, YouTube Analytics, Instagram reach, audience metrics or per-post analytics through MCP.
+- **No publishing.** Tukey never publishes to, deletes from or modifies your YouTube channel or Instagram account, and an assistant cannot do so through Tukey.
+- **No guarantees.** Tukey makes no promise of views, performance, revenue, ranking, growth or virality.
+- **No TikTok.** YouTube and Instagram only.
+- **Instagram:** no Instagram login, no verification of control or ownership, no access token, no private data or direct messages, and no views, private analytics, reach or verified audience data.
+- **Not every Tukey Workspace feature is available through MCP.** MCP never creates accounts, connects a creator account, starts a new analysis or changes billing.
+
+## Privacy, consent and disconnecting
+
+- **Consent.** The assistant registers itself with Tukey (OAuth 2.1, authorization code with PKCE, dynamic client registration). Tukey's consent page names the assistant and shows the address that will receive access; read access needs `tukey:read`, the two action tools also need `tukey:write`. Access tokens are valid for at most one hour; a refresh token is issued only when you grant offline access.
+- **Disconnect.** Tukey > Connections > Connected agents > Disconnect is the authoritative revocation control. It deletes that assistant's authorization and tokens on Tukey's side, and Tukey issues no new or refreshed tokens; an already-issued token is designed to be refused on its next request. Removing Tukey inside ChatGPT, Claude or another assistant may not by itself end Tukey's authorization, so disconnect in Tukey as well.
+- **Your data.** Privacy Policy: https://tukey.ai/privacy-policy. Terms of Service: https://tukey.ai/terms-of-service. For questions about your personal information, or to request access to or deletion of your data, email legal@tukey.ai as the Privacy Policy describes.
+
+## Troubleshooting
+
+- **Cannot find the setup menu.** Labels vary by plan and while these features are in beta. In ChatGPT Business, Enterprise or Edu a workspace Admin or Owner (or an authorized developer) must create the app; in Claude Team or Enterprise an Owner adds the connector first.
+- **Action tools missing.** ChatGPT capabilities depend on plan and workspace controls; Pro may be limited to read/fetch. Rating and starting always remain available inside Tukey.
+- **Could not reach Tukey or sign-in failed.** Check that the address is exactly `https://www.tukey.ai/mcp`, then connect again. If you had already approved consent, remove the connection in the assistant, disconnect it in Tukey's Connections page, and connect again.
+- **Consent page says the account has no access.** Contact support@tukey.ai from the address on your Tukey account.
+- **Tukey says there is no channel.** Connect a YouTube channel through Google, or submit a public Instagram account and confirm it after Tukey reads it.
+- **No profile or no ideas yet.** Profiling and the first ideas take time after an account is connected.
+- **A rejected idea is missing.** Tukey withholds topics you declined for a while. This is expected.
+- **The assistant answered a view-count question.** Tukey does not provide performance analytics; for a YouTube channel use YouTube Studio.
+
+## For agent builders: endpoint and discovery
 
 ```
 https://www.tukey.ai/mcp
 ```
 
-Transport: streamable HTTP (remote MCP). Authentication: OAuth 2.1 authorization code with PKCE, with automatic (dynamic) client registration. Every request must carry an access token issued for this endpoint; there is no anonymous access.
+- Transport: streamable HTTP (remote MCP). Protocol revision 2026-07-28, with the 2025-11-25, 2025-06-18 and 2025-03-26 revisions also served.
+- Authentication: OAuth 2.1 authorization code with PKCE and dynamic client registration. Every request carries an access token issued for this endpoint; there is no anonymous access.
+- Server card (tool list and annotations): https://www.tukey.ai/.well-known/mcp/server-card.json
+- Protected resource metadata (authorization server and scopes): https://www.tukey.ai/.well-known/oauth-protected-resource/mcp
+- Machine-readable product summary: https://tukey.ai/llms.txt
+- Official MCP Registry: `ai.tukey/tukey`, latest version 0.1.1.
 
-## Prerequisites
-
-1. A Tukey account that currently has access.
-2. One active connected YouTube channel in Tukey (Connections page).
-3. A completed Tukey channel profile. Profiling and the first batch of opportunities take time after a channel is connected; if the account has access but the channel or profile is not ready, authorization may complete and Tukey truthfully reports that the channel, profile or opportunities are not ready yet.
-   If the account does not have access, authorization cannot complete and no Tukey account or channel data is returned.
-4. An assistant and plan that support custom remote MCP servers (see below).
-
-## ChatGPT setup (plan and workspace qualified)
-
-Tukey is not yet listed in the ChatGPT Plugin Directory, so it is added as a custom app. Menu labels may vary while the feature is in beta, and full MCP support (including write actions) is currently subject to ChatGPT plan and workspace controls.
-
-- **Business, Enterprise and Edu.** A workspace Admin or Owner, or a developer they authorize:
-  1. enables Developer mode;
-  2. opens Settings (or Workspace settings) > Apps > Create;
-  3. enters `https://www.tukey.ai/mcp` as the server URL;
-  4. selects OAuth and completes the authorization (sign in to Tukey, approve the consent page);
-  5. lets ChatGPT scan the tools;
-  6. creates and enables the app.
-- **Pro.** OpenAI currently limits custom MCP use on Pro to eligible read/fetch capabilities in Developer mode. Tukey has not separately canary-tested the Pro surface. Do not rely on Tukey's two action tools being available on Pro.
-- **Other plans.** If the plan does not offer custom MCP apps, Tukey cannot be connected to ChatGPT yet.
-
-## Claude setup (individual versus organization)
-
-Tukey is not yet listed in the Claude Connectors Directory, so it is added as a custom connector.
-
-- **Pro and Max (individual).** Customize > Connectors > + Add > Add custom connector. Enter `https://www.tukey.ai/mcp` and continue with the OAuth settings Claude detects.
-- **Team and Enterprise (organization).** An Owner, or another authorized role, first adds the connector under Organization settings > Connectors with the same endpoint. Members then connect it under Customize > Connectors.
-
-Claude's own "disconnect" does not necessarily end Tukey's authorization; see *Disconnect and revocation*.
-
-## OAuth and consent
-
-1. The assistant registers itself with Tukey automatically (dynamic client registration) and starts an OAuth authorization-code flow with PKCE.
-2. You are sent to Tukey to sign in (email and password, or Google).
-3. Tukey's consent page names the assistant that is asking and shows the address that will receive access (for example `chatgpt.com` or `claude.ai`). Check that it matches the assistant you are using.
-4. The page lists what the assistant will be able to do. Reading needs the `tukey:read` permission; the two action tools additionally need `tukey:write`. Choose **Allow** to connect or **Cancel** to stop. Nothing is connected until you choose Allow.
-5. Tukey issues the assistant short-lived access tokens (valid for at most one hour) and, when offline access was granted, a refresh token so it can stay connected until you disconnect it.
-
-Tukey never shares your YouTube analytics or private channel insights with an assistant, and Tukey never publishes to or modifies your YouTube channel.
-
-## Tools
-
-Exactly six tools are exposed.
-
-**Read tools (do not change your account)**
-
-| Tool | What it returns |
-| --- | --- |
-| `get_profile` | Which Tukey account is connected (its name and email address), so the assistant can tell accounts apart. No channel data. |
-| `get_channel_profile` | Tukey's profile of the active YouTube channel: what it is about, its formats, voice, hooks, audience, and subscriber and video counts. |
-| `list_video_opportunities` | The current video opportunities for the channel, each with title, premise, angle, hook, why it fits, why now and how much evidence backs it. Can include saved ideas. |
-| `get_opportunity_evidence` | The dated public sources behind one opportunity. |
-
-**Action tools (change your account; use only after an explicit user request)**
-
-| Tool | What it does |
-| --- | --- |
-| `rate_video_opportunity` | Records a keep, weak or reject rating on one opportunity, exactly as if you had rated it in Tukey. |
-| `start_video_opportunity` | Starts one opportunity as a Tukey video workspace and saves it. Starting the same opportunity again returns the same workspace and never creates a second one. |
-
-## Example prompts
-
-- "What should I make next on my channel?"
-- "List my current Tukey video opportunities."
-- "Why does the first opportunity fit my channel?"
-- "Show me the evidence behind the second opportunity."
-- "Mark the third opportunity as weak in Tukey."
-- "Start the first opportunity in Tukey."
-
-The last two are explicit requests for the action tools; an assistant should not rate or start an opportunity you did not ask it to.
-
-## Disconnect and revocation
-
-- **Tukey Connections > Disconnect** is the authoritative Tukey-side revocation control. Open Connections in Tukey, find the assistant under Connected agents, and choose Disconnect.
-- Tukey deletes the assistant's authorization and stored tokens and issues it no new or refreshed tokens.
-- Tukey's endpoint is designed to refuse an already-issued access token on its next protected request.
-- In any event, access tokens expire within one hour of being issued.
-- Disconnecting from inside ChatGPT also ends Tukey's authorization. Removing the connector inside Claude does not by itself end Tukey's authorization; use Tukey's Connections page as well.
-
-## Troubleshooting
-
-- **Cannot find the setup menu.** Labels vary by plan and while these features are in beta. In ChatGPT Business, Enterprise or Edu a workspace Admin or Owner must create the app; in Claude Team or Enterprise an Owner adds the connector first.
-- **Action tools missing.** ChatGPT capabilities depend on the current plan and workspace controls. Pro may be limited to eligible read/fetch capabilities, and Tukey has not separately canary-tested that surface. Rating and starting always remain available inside Tukey itself.
-- **Could not reach Tukey or sign-in failed.** Check that the server address is exactly `https://www.tukey.ai/mcp`, then connect again. If you had already approved consent, remove the connection in the assistant, disconnect it in Tukey's Connections page, and connect again.
-- **Consent page says the account has no access.** The Tukey account is not currently eligible. Contact support@tukey.ai.
-- **Tukey says there is no channel.** Connect a YouTube channel in Tukey and make it the active channel. Assistants only see the active channel.
-- **No profile or no ideas yet.** Profiling and the first opportunities take time after a channel is connected.
-- **A rejected idea is missing.** Tukey withholds topics you declined for a while. This is expected.
-- **The assistant answered a question about view counts.** Tukey does not provide per-video view counts or performance analytics through MCP; use YouTube Studio.
-
-## Current limitations
-
-- YouTube only.
-- Access-controlled Tukey accounts; no open signup through MCP.
-- No YouTube analytics through MCP.
-- No Instagram or TikTok support yet.
-- No guaranteed outcome of any kind.
+The server's instructions tell a model to use Tukey only for the user's own connected account, to list ideas with one call, to fetch evidence only when asked, to say so when no idea has citations, and to call an action tool only on the user's explicit request.
 
 ## Links
 
-- X: https://x.com/TukeyAI
-- Youtube: https://www.youtube.com/@TukeyAI
-- LinkedIn: https://www.linkedin.com/company/tukey-ai/
-- CrunchBase: https://www.crunchbase.com/organization/tukey-ai
 - Support and setup guide (canonical): https://tukey.ai/support
+- Claude Connectors Directory listing: https://claude.ai/directory/tukey
+- Official MCP Registry entry (latest): https://registry.modelcontextprotocol.io/v0.1/servers/ai.tukey%2Ftukey/versions/latest
+- Sign up: https://tukey.ai/sign-up
+- Pricing: https://tukey.ai/pricing
 - Privacy Policy: https://tukey.ai/privacy-policy
 - Terms of Service: https://tukey.ai/terms-of-service
-- Official MCP Registry entry (published, active, version 0.1.0): https://registry.modelcontextprotocol.io/v0.1/servers/ai.tukey%2Ftukey/versions/0.1.0
+- X: https://x.com/TukeyAI
+- YouTube: https://www.youtube.com/@TukeyAI
+- LinkedIn: https://www.linkedin.com/company/tukey-ai/
+- Crunchbase: https://www.crunchbase.com/organization/tukey-ai
+
+Tukey is an independent service and is not endorsed by, affiliated with, or a partner of Meta or Instagram, Google, Anthropic or OpenAI.
 
 ## Maintenance
 
-https://tukey.ai/support is the canonical guide. This document must be updated whenever the endpoint, the tool inventory, the supported clients or plans, or availability changes, and the "Last verified" date above must be refreshed at the same time.
+https://tukey.ai/support is the canonical guide. This document is updated whenever the endpoint, the tool inventory, the supported platforms, the supported clients or plans, the directory listings, or availability changes, and the "Last verified" date above is refreshed at the same time.
