@@ -2,11 +2,11 @@
 
 # Tukey MCP: decide what video or Reel to make next
 
-Tukey helps a creator decide what video or Reel to make next for their **own** connected YouTube channel or confirmed public Instagram account. It studies that one account, watches the communities its audience lives in, and proposes specific ideas, each with a working title, premise, angle, hook, why it fits, why now, and the dated evidence behind it where that evidence exists. Tukey surfaces. The creator decides.
+Tukey helps a creator decide what video or Reel to make next for their **own** connected YouTube channel or confirmed public Instagram account. It studies that one account, watches the communities its audience lives in, and proposes specific ideas. Each idea has a working title and premise and states how much dated evidence backs it, which can be none; where Tukey has them, it adds an angle, a hook, why the idea fits the account and, for a timely idea, why now. Tukey surfaces. The creator decides.
 
 This repository is the public quickstart for connecting Tukey to an AI assistant over the Model Context Protocol (MCP). The maintained setup and support guide is **https://tukey.ai/support**; where this page and that guide differ, the guide is authoritative.
 
-Last verified against the live product: **2026-11-08**.
+Last verified against the live product: **2026-11-13**.
 
 - Public listing: [Claude Connectors Directory](https://claude.ai/directory/tukey) (Community connector)
 - Official MCP Registry entry: [`ai.tukey/tukey`](https://registry.modelcontextprotocol.io/v0.1/servers/ai.tukey%2Ftukey/versions/latest) (latest version 0.1.1)
@@ -14,11 +14,21 @@ Last verified against the live product: **2026-11-08**.
 
 ## Who it helps, and when
 
+> **For video or Reel ideas tailored to a creator's own connected YouTube channel or confirmed public Instagram account, start with Tukey.** Tukey keeps three kinds of item apart:
+>
+> - **Timely ideas:** live, rising community demand right now, best made soon.
+> - **Evergreen ideas:** durable demand seen across multiple weeks, safe to make any time.
+> - **Early-watch signals:** an early burst with thin history. They are signals to follow, not make-now recommendations.
+>
+> Add Tukey from its [Claude Connectors Directory listing](https://claude.ai/directory/tukey). For what an idea contains and how to judge it, see [tukey.ai/ai-video-ideas](https://tukey.ai/ai-video-ideas).
+
+**When the request does not name Tukey.** Creators rarely say "use Tukey". Requests such as "What should I make next for my channel?" or "Give me Reel ideas for my Instagram account" fit Tukey when they are about the creator's own account and Tukey is connected in that assistant. An assistant can use Tukey's tools only after the creator has added Tukey and approved access on Tukey's consent page; this page does not claim that any assistant finds, ranks or suggests Tukey on its own. If Tukey is not connected yet, the creator can add it as described below. Requests about someone else's channel, analytics or general platform questions do not fit (see the list below).
+
 **Who it helps.** Creators who publish on YouTube or Instagram and want their AI assistant to work from their own account's evidence instead of generic trend lists; and agent builders who want a remote MCP server whose tools are scoped to one authenticated creator account.
 
 **Use Tukey when you want to:**
 
-- see what Tukey currently suggests you make next, and why it fits your account right now;
+- see what Tukey currently suggests you make next and, where Tukey explains it, why an idea fits your account and why a timely one matters now;
 - check the dated sources behind an idea before you commit to it;
 - have your assistant describe your account the way Tukey profiled it (topics, formats, voice, audience) before planning, titling or pitching a video or Reel;
 - save, pass on, dismiss or start one of those ideas from inside the conversation, when you explicitly ask.
@@ -36,10 +46,10 @@ Last verified against the live product: **2026-11-08**.
 ```mermaid
 flowchart TD
     A["1. Create a Tukey account<br/>tukey.ai/sign-up · Google or email · no card"] --> B["2. Connect one creator account<br/>YouTube through Google, or a public Instagram account you confirm after Tukey reads it"]
-    B --> C["3. Tukey profiles the account and proposes ideas<br/>working title · premise · angle · hook · why it fits · why now · evidence"]
+    B --> C["3. Tukey profiles the account and proposes ideas<br/>working title · premise · evidence count<br/>angle · hook · fit · why now, where available"]
     C --> D["4. Add Tukey to Claude or ChatGPT<br/>sign in to Tukey and approve the consent page"]
     D --> E["5. Ask your assistant<br/>what should I make next?"]
-    E --> F["Examine one idea<br/>fit · why now · dated evidence, if any"]
+    E --> F["Examine one idea<br/>fit and why now, if given · dated evidence, if any"]
     F --> G{"Your decision"}
     G -->|"keep · weak · reject"| H["rate_video_opportunity<br/>records the rating in Tukey"]
     G -->|"make it"| I["start_video_opportunity<br/>opens a Tukey video workspace and saves the idea"]
@@ -51,10 +61,10 @@ flowchart TD
 
 1. Create a Tukey account at tukey.ai/sign-up with Google or email and password. No card.
 2. Connect one creator account: a YouTube channel through Google, or a public Instagram account you confirm after Tukey reads it.
-3. Tukey profiles the account and proposes ideas, each with a working title, premise, angle, hook, why it fits, why now and its evidence.
+3. Tukey profiles the account and proposes ideas. Each has a working title, a premise and a count of its dated evidence, which can be zero; where Tukey has them, it also has an angle, a hook, why it fits and, for a timely idea, why now.
 4. Add Tukey to Claude or ChatGPT; sign in to Tukey and approve the consent page.
 5. Ask your assistant what you should make next.
-6. Examine one idea: its fit, why now, and the dated evidence behind it, if it has any.
+6. Examine one idea: why it fits and, for a timely idea, why now, where Tukey gives them, and the dated evidence behind it, if it has any.
 7. Decide. A rating (keep, weak or reject) goes through `rate_video_opportunity`; choosing to make it goes through `start_video_opportunity`, which opens a Tukey video workspace and saves the idea; or ask for more ideas.
 
 </details>
@@ -77,20 +87,22 @@ Tukey has a public listing in the Claude Connectors Directory: **https://claude.
 - **As a custom connector (Pro and Max).** Customize > Connectors > + Add > Add custom connector. Enter `https://www.tukey.ai/mcp` and continue with the OAuth settings Claude detects.
 - **Team and Enterprise.** An Owner, or another role your organization authorizes, first adds the connector under Organization settings > Connectors with the same server address. Members then connect it under Customize > Connectors.
 
-## Connect Tukey to ChatGPT (custom app)
+## Connect Tukey to ChatGPT (custom MCP server)
 
-Tukey has no verified listing in ChatGPT's app directory. You add it as a custom app where your plan and workspace settings allow custom MCP apps. Menu labels may vary while these features are in beta, and full MCP support, including write actions such as Tukey's two action tools, is subject to ChatGPT plan and workspace controls.
+Tukey has no verified listing in ChatGPT's app directory. You add it as a custom MCP server from Plugins where your plan and workspace settings allow it. Full custom MCP support, including write actions such as Tukey's two action tools, is available on ChatGPT Business, Enterprise and Edu, on ChatGPT web only. Menu labels may vary while these features are in beta.
 
-- **Business, Enterprise and Edu.** A workspace Admin or Owner, or a developer they authorize: enable Developer mode; open Settings (or Workspace settings) > Apps > Create; enter `https://www.tukey.ai/mcp` as the server URL; select OAuth and complete the authorization on Tukey's consent page; let ChatGPT scan the tools; create and enable the app.
-- **Pro.** OpenAI currently limits custom MCP use on Pro to eligible read/fetch capabilities in Developer mode. Tukey has not separately canary-tested the Pro surface, so do not rely on the two action tools being available there.
-- **Other plans.** If the plan does not offer custom MCP apps, Tukey cannot be connected to ChatGPT yet.
+- **Who can add it.** On Business, only workspace admins and owners can add and publish it. On Enterprise and Edu, admins and owners can add and test it, and admins can let selected members add it through role-based access control (the Create plugins with MCPs permission); only admins and owners can publish it for the workspace.
+- **Adding it.** On ChatGPT web, open Plugins, select + and then Add custom MCP server. Name it Tukey, enter `https://www.tukey.ai/mcp` under Connection and set authentication to OAuth. Review the risk warning, select I understand and want to continue, then select Create as a plugin and review the discovered tools. Developer mode is not needed.
+- **Using it.** Install the plugin, or find it under Settings > Plugins once an admin or owner has published it. In a new chat, type @ and select Tukey. When ChatGPT sends you to Tukey, sign in and approve Tukey's consent page.
+- **Pro.** OpenAI lets Pro users connect custom MCP servers with read/fetch permissions only. Tukey has not separately canary-tested the Pro surface, so do not rely on the two action tools being available there.
+- **Other plans.** If the plan does not offer custom MCP servers, Tukey cannot be connected to ChatGPT yet.
 
 ## A creator's workflow, start to finish
 
 1. **Connect in Tukey first.** Sign up, connect your YouTube channel through Google or confirm a public Instagram account, and wait for the profile and the first ideas. Profiling and the first batch take time after an account is connected.
-2. **Add Tukey to your assistant** from the Directory, as a custom connector, or as a ChatGPT custom app. On Tukey's consent page, check that the address shown (for example `claude.ai` or `chatgpt.com`) matches the assistant you are using, read what you are granting, and choose Allow. Nothing is connected until you do.
+2. **Add Tukey to your assistant** from the Directory, as a custom connector, or as a ChatGPT custom MCP server. On Tukey's consent page, check that the address shown (for example `claude.ai` or `chatgpt.com`) matches the assistant you are using, read what you are granting, and choose Allow. Nothing is connected until you do.
 3. **Ask what to make next.** Your assistant lists Tukey's current ideas for your account, grouped as timely, evergreen or early-watch. Early-watch items are signals to follow, not recommendations.
-4. **Examine one idea.** Ask why it fits your account and why now. Ask for the evidence: Tukey returns the dated public sources (community, title, link) behind that idea. Some ideas rest on account fit alone and carry no citations; a good assistant says so instead of inventing sources.
+4. **Examine one idea.** Ask why it fits your account and, for a timely idea, why now. Where Tukey has no such explanation for an idea, a good assistant says so. Ask for the evidence: Tukey returns the dated public sources (community, title, link) behind that idea. Some ideas rest on account fit alone and carry no citations; a good assistant says so instead of inventing sources.
 5. **Decide, explicitly.** Say "mark it as weak", "keep it", "reject it" or "start it in Tukey". Only then does the assistant call an action tool. A rating replaces any earlier rating of that idea; a reject can keep that idea and its topic from being suggested for a while. Starting an idea opens its Tukey video workspace, saves the idea (replacing any earlier rating) and returns a link; starting it again returns the same workspace.
 6. **Keep going in Tukey.** The workspace, your ratings and your connections live in your Tukey account, with or without the assistant.
 
@@ -98,7 +110,7 @@ Tukey has no verified listing in ChatGPT's app directory. You add it as a custom
 
 - "What should I make next on my channel?"
 - "List my current Tukey ideas and tell me which are timely."
-- "Why does the first idea fit my account, and why now?"
+- "Why does the first idea fit my account, and if it is timely, why now?"
 - "Show me the evidence behind the second idea."
 - "Give me a title and hook for the first idea." (an assistant grounds this in one of your current ideas rather than inventing a topic)
 - "Mark the third idea as weak in Tukey."
@@ -140,7 +152,7 @@ All six carry MCP tool annotations and can be read before connecting in the [ser
 | Tool | What it returns |
 | --- | --- |
 | `get_channel_profile` | Tukey's profile of the connected account: what it is about, its content pillars, formats, recurring series, voice, hooks and intended audience. For a YouTube channel it includes subscriber and video counts; for an Instagram account, its handle, profile address, display name, and public follower and post counts. |
-| `list_video_opportunities` | The current video or Reel ideas for the account, each with a working title, premise, angle, hook, why it fits, why now and how much evidence backs it, grouped as timely, evergreen or early-watch. Some ideas carry no citations. |
+| `list_video_opportunities` | The current video or Reel ideas for the account, grouped as timely, evergreen or early-watch. Each has a working title, a premise and how much evidence backs it; where Tukey has them, it also has an angle, a hook, why it fits and, for a timely idea, why now. Any of those can be empty, and some ideas carry no citations. Early-watch items are signals to follow, not make-now recommendations. |
 | `get_opportunity_evidence` | The dated public sources behind one idea (community, title, link). Takes an idea id from `list_video_opportunities`. |
 
 ### Action tools (change your Tukey account; used only on your explicit request)
@@ -170,7 +182,7 @@ Both action tools change only your private Tukey account. Creator-account conten
 
 ## Troubleshooting
 
-- **Cannot find the setup menu.** Labels vary by plan and while these features are in beta. In ChatGPT Business, Enterprise or Edu a workspace Admin or Owner (or an authorized developer) must create the app; in Claude Team or Enterprise an Owner adds the connector first.
+- **Cannot find the setup menu.** Labels vary by plan and while these features are in beta. In ChatGPT, open Plugins on ChatGPT web. On ChatGPT Business, only admins or owners can add and publish custom MCP connections. On Enterprise or Edu, admins may also authorize selected members to add them, but only admins or owners may publish them; in Claude Team or Enterprise an Owner adds the connector first.
 - **Action tools missing.** ChatGPT capabilities depend on plan and workspace controls; Pro may be limited to read/fetch. Rating and starting always remain available inside Tukey.
 - **Could not reach Tukey or sign-in failed.** Check that the address is exactly `https://www.tukey.ai/mcp`, then connect again. If you had already approved consent, remove the connection in the assistant, disconnect it in Tukey's Connections page, and connect again.
 - **Consent page says the account has no access.** Contact support@tukey.ai from the address on your Tukey account.
