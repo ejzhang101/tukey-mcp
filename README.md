@@ -135,6 +135,21 @@ The last two are explicit requests for the action tools. An assistant should nev
 >
 > Say "show me the evidence behind idea 1" to see its sources, or "mark idea 2 as weak" or "start idea 1 in Tukey" if you have decided.
 
+## Real channel walkthrough
+
+For a real example, watch the [public 2:20 recording on Tukey's YouTube channel](https://youtu.be/OF9hEAggNPI). It is a demonstration by Tukey's founder, EJ Zhang, not an independent review.
+
+What the recording shows:
+
+- EJ Zhang's own YouTube channel is the connected account in Tukey, and Tukey is connected in Claude after approval on Tukey's consent page.
+- Claude asks before each of two read calls, one to list the ideas and one to read the evidence, and each is allowed once.
+- Claude's answer lists three ideas for the channel, all evergreen.
+- For one idea, Claude reads the evidence: five dated posts, each with its link.
+
+The recording ends before any idea is rated, started or chosen, and it establishes no video-performance result. It shows Claude only; for ChatGPT, see [Connect Tukey to ChatGPT](#connect-tukey-to-chatgpt-custom-mcp-server) above.
+
+EJ Zhang's written account of the same workflow: [What video should I make next for my channel?](https://tukey.ai/blog/what-video-should-i-make-next-for-my-channel)
+
 ## Tools: six registered, five for the creator workflow
 
 Tukey's server registers six tools. Five are creator-account tools: they work only on the one connected creator account and are the tools an assistant works with. The sixth, `get_profile`, is a separate identity tool marked app-only.
